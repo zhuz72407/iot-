@@ -1,23 +1,13 @@
-import { GoogleGenAI } from "@google/genai";
 import { Ticket } from "../types";
 import { getCaseLibrary } from "./mockData";
 
-const apiKey = process.env.API_KEY || '';
-const ai = new GoogleGenAI({ apiKey });
+// 移除前端直接引用的 SDK 和 API Key
+// import { GoogleGenAI } from "@google/genai";
+// const apiKey = process.env.API_KEY || '';
+// const ai = new GoogleGenAI({ apiKey });
 
 export const generateTicketAnalysis = async (ticket: Ticket): Promise<string> => {
-  if (!apiKey) {
-    console.warn("API Key is missing. Returning mock response.");
-    return `[模拟 AI 分析模式]
-由于缺少 API Key，无法进行实时智能分析。
-模拟分析结果：
-1. 根据各班组反馈，疑似核心网侧配置参数存在异常。
-2. 建议核查 HSS 和 PGW 之间的链路配置。
-3. 参考类似案例：TKT-20231026-005。`;
-  }
-
-  // 1. Fetch relevant knowledge base cases
-  // Enriched context with diagnoses to help AI match patterns better
+  // 1. 准备上下文数据 (Prompt 构建逻辑保留在前端，以便灵活调整业务逻辑)
   const knowledgeBase = getCaseLibrary().slice(0, 5);
   
   let knowledgeContext = "暂无相关历史案例。";
@@ -80,13 +70,28 @@ export const generateTicketAnalysis = async (ticket: Ticket): Promise<string> =>
   `;
 
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
+    // 调用后端代理接口，而不是直接调用 Google API
+    const response = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ prompt }),
     });
-    return response.text || "AI无法生成分析结果。";
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `Server Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.text || "AI无法生成分析结果。";
+
   } catch (error) {
-    console.error("Gemini API Error:", error);
-    return "AI分析服务暂时不可用，请稍后再试。";
+    console.error("AI Service Error:", error);
+    return `[系统提示] AI分析服务调用失败。
+    
+原因: ${error instanceof Error ? error.message : '网络连接异常'}
+建议: 请检查是否已在部署平台(Vercel/Netlify)配置 API_KEY 环境变量。`;
   }
 };
