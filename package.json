@@ -1,12 +1,13 @@
 {
-  "name": "iot智能工单系统1208",
+  "name": "理想车企iot智能问诊平台",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^19.2.1",

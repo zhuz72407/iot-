@@ -1,6 +1,6 @@
 
 export enum Role {
-  FRONT_DESK = '前台支撑人员',
+  FRONT_DESK = '理想IT人员/前台支撑人员',
   CUSTOMER_RESPONSE = '客响班',
   CORE_NET = '核心网专业班',
   NET_OPT = '网优专业班',

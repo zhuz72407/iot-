@@ -68,8 +68,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
              <div className="absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full animate-ping"></div>
           </div>
 
-          <h1 className="text-2xl font-bold text-white tracking-wider mb-1">IoT 智能工单系统</h1>
-          <p className="text-slate-400 text-sm font-medium tracking-wide mb-10">Intelligent Operation Center</p>
+          <h1 className="text-2xl font-bold text-white tracking-wider mb-1">理想车企 IoT 智能问诊平台</h1>
+          <p className="text-slate-400 text-sm font-medium tracking-wide mb-10">Intelligent IoT Diagnosis Center</p>
           
           <form onSubmit={handleSubmit} className="w-full space-y-6">
             

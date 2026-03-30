@@ -6,7 +6,10 @@ import {
   Ticket as TicketIcon, 
   BookOpen, 
   LogOut, 
-  User as UserIcon 
+  User as UserIcon,
+  Zap,
+  Monitor,
+  Users
 } from 'lucide-react';
 
 interface LayoutProps {
@@ -20,22 +23,25 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ user, activeTab, onTabChange, onLogout, children }) => {
   const navItems = [
     { id: 'dashboard', label: '仪表盘', icon: LayoutDashboard },
-    { id: 'tickets', label: '工单中心', icon: TicketIcon },
+    { id: 'monitor', label: '监控大屏', icon: Monitor },
+    { id: 'profile', label: '用户画像', icon: Users },
+    { id: 'tickets', label: '问诊中心', icon: TicketIcon },
+    { id: 'scc', label: 'SCC 诊断助手', icon: Zap },
     { id: 'knowledge', label: '案例知识库', icon: BookOpen },
   ];
 
   return (
     <div className="flex h-screen bg-slate-50">
       {/* Sidebar */}
-      <div className="w-64 bg-slate-900 text-white flex flex-col shadow-xl">
+      <div className="w-64 bg-slate-900 text-white flex flex-col shadow-xl z-50">
         <div className="p-6 border-b border-slate-700">
           <h1 className="text-xl font-bold flex items-center gap-2">
             <div className="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center">
               <TicketIcon className="w-5 h-5 text-white" />
             </div>
-            IoT 支撑系统
+            理想车企 IoT
           </h1>
-          <p className="text-xs text-slate-400 mt-2 ml-10">智能工单投诉处理</p>
+          <p className="text-xs text-slate-400 mt-2 ml-10">智能问诊平台</p>
         </div>
 
         <div className="p-4 border-b border-slate-800 bg-slate-800/50">
@@ -79,7 +85,7 @@ export const Layout: React.FC<LayoutProps> = ({ user, activeTab, onTabChange, on
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto bg-slate-100">
         {children}
       </div>
     </div>

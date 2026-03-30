@@ -136,8 +136,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ tickets }) => {
     }
 
     const exportData = filteredTickets.map(ticket => ({
-      '工单号': ticket.id,
-      '工单标题': ticket.title,
+      '问诊单号': ticket.id,
+      '问诊标题': ticket.title,
       '故障描述': ticket.description,
       '紧急程度': ticket.urgency,
       '当前状态': ticket.status,
@@ -152,10 +152,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ tickets }) => {
 
     const worksheet = XLSX.utils.json_to_sheet(exportData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "工单报表");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "问诊报表");
 
     // Generate filename with date range
-    const filename = `IoT工单报表_${startDate}_${endDate}.xlsx`;
+    const filename = `理想车企IoT问诊报表_${startDate}_${endDate}.xlsx`;
     XLSX.writeFile(workbook, filename);
   };
 
@@ -167,7 +167,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ tickets }) => {
            <h2 className="text-3xl font-bold text-slate-800 tracking-tight">运营仪表盘</h2>
            <p className="text-slate-500 mt-2 flex items-center gap-2">
              <Activity className="w-4 h-4 text-brand-500" />
-             实时监控工单处理效率与业务趋势
+             实时监控问诊处理效率与业务趋势
            </p>
         </div>
         
@@ -308,7 +308,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ tickets }) => {
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-brand-500" />
-              工单数量趋势
+              问诊单数量趋势
             </h3>
             <span className="text-xs text-slate-400 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
                按天统计
@@ -338,11 +338,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ tickets }) => {
                     />
                     <Bar 
                       dataKey="count" 
-                      name="工单数" 
+                      name="问诊数" 
                       fill="#3b82f6" 
                       radius={[6, 6, 0, 0]} 
                       barSize={30}
-                      // Add a subtle gradient effect simulated by solid color for now, or could use defs
                     />
                   </BarChart>
                 </ResponsiveContainer>
@@ -402,7 +401,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ tickets }) => {
       {/* Recent Activity Table */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-          <h3 className="text-lg font-bold text-slate-800">工单监控列表</h3>
+          <h3 className="text-lg font-bold text-slate-800">问诊监控列表</h3>
           <span className="text-xs text-slate-500 bg-white border border-slate-200 px-2 py-1 rounded shadow-sm">
              显示最近 8 条 (基于筛选)
           </span>
@@ -411,7 +410,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ tickets }) => {
           <table className="w-full text-sm text-left">
             <thead className="text-xs text-slate-500 uppercase bg-slate-50/50">
               <tr>
-                <th className="px-6 py-3 font-semibold">工单名称</th>
+                <th className="px-6 py-3 font-semibold">问诊名称</th>
                 <th className="px-6 py-3 font-semibold">提交时间</th>
                 <th className="px-6 py-3 font-semibold">紧急程度</th>
                 <th className="px-6 py-3 font-semibold">状态/阶段</th>
@@ -425,7 +424,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ tickets }) => {
                   <td colSpan={6} className="px-6 py-12 text-center text-slate-500">
                     <div className="flex flex-col items-center gap-2">
                        <FilterX className="w-10 h-10 text-slate-200" />
-                       <p>该筛选条件下无工单记录</p>
+                       <p>该筛选条件下无记录</p>
                     </div>
                   </td>
                 </tr>
